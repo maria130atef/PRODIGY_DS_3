@@ -1,0 +1,36 @@
+Label Encoding:
+
+Label encoding assigns a unique integer to each category in a categorical variable. This method is suitable when there is an ordinal relationship between the categories, meaning that there is a meaningful order among them.
+
+You can use the LabelEncoder from scikit-learn for label encoding.
+------------------------------------------------------------------------------------------------------------------------------------------
+from sklearn.preprocessing import LabelEncoder
+
+# Example: Assuming 'education' is a categorical variable
+label_encoder = LabelEncoder()
+df['education_encoded'] = label_encoder.fit_transform(df['education'])
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+Remember to fit the encoder on the training data and use the same fitted encoder to transform both the training and testing data.
+
+One-Hot Encoding:
+
+One-hot encoding creates binary columns for each category and indicates the presence of a category with a 1 or 0. This method is suitable when there is no ordinal relationship between categories, and each category is independent.
+
+You can use the get_dummies function in Pandas or the OneHotEncoder from scikit-learn for one-hot encoding.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Example: Assuming 'marital' is a categorical variable
+df = pd.get_dummies(df, columns=['marital'], prefix=['marital'])
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+from sklearn.preprocessing import OneHotEncoder
+
+# Example: Assuming 'marital' is a categorical variable
+one_hot_encoder = OneHotEncoder()
+df_encoded = one_hot_encoder.fit_transform(df[['marital']]).toarray()
+df_encoded = pd.DataFrame(df_encoded, columns=one_hot_encoder.get_feature_names(['marital']))
+df = pd.concat([df, df_encoded], axis=1)
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+One-hot encoding is often preferred when dealing with nominal categorical variables.
